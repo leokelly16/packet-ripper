@@ -1,0 +1,14 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.o
+*.com
+*.class
+*.dll
+*.exe
+*.out
+*.app
+
+# Folder for built binaries
+build/
