@@ -44,6 +44,17 @@ int main() {
         }
         // otherwise success
         printf("Packet ripped: Size %d bytes\n", data_size);
+        
+        // frame decoding (using ethhdr from if_ether.h, assigned to buffer)
+        struct ethhdr *eth = (struct ethhdr *)buffer;
+        // print the destination and source mac addresses by pulling the packet header from the buffer (byte by byte)
+        printf("Destination MAC address: %02x:%02x:%02x:%02x:%02x:%02x\n",
+        eth->h_dest[0], eth->h_dest[1], eth->h_dest[2], eth->h_dest[3], eth->h_dest[4], eth->h_dest[5]);
+        printf("Source MAC address: %02x:%02x:%02x:%02x:%02x:%02x\n",
+        eth->h_source[0], eth->h_source[1], eth->h_source[2], eth->h_source[3], eth->h_source[4], eth->h_source[5]);
+        // print the protocol type in hex (also pulled from packet header, 0x0800 is IPv4)
+        // using ntohs (network to host short) to convert big endian (network byte order) to little endian (host byte order)
+        printf("Protocol type: 0x%04x\n", ntohs(eth->h_proto));
     }
 
     close(raw_socket);
